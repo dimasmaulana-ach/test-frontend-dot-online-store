@@ -60,7 +60,6 @@ const Drawer: React.FC<DrawerProps> = ({
   showOverlay = true,
   title = "",
 }) => {
-  // Close drawer when pressing escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -77,7 +76,6 @@ const Drawer: React.FC<DrawerProps> = ({
     };
   }, [isOpen, onClose]);
 
-  // Prevent body scrolling when drawer is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";

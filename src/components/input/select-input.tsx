@@ -3,12 +3,46 @@ import { useField } from "formik";
 import React from "react";
 
 interface SelectInputProps {
+  /**
+   * Name of the field in Formik.
+   * @default ""
+   */
   name?: string;
+
+  /**
+   * Label for the select input.
+   * @default ""
+   */
   label?: string;
+
+  /**
+   * Options for the select input.
+   * @default []
+   */
   options: { value: string | number; label: string }[];
+
+  /**
+   * Placeholder text for the select input.
+   * @default ""
+   */
   placeholder?: string;
+
+  /**
+   * Prefix element to be displayed before the select input.
+   * @default null
+   */
   prefix?: React.ReactNode;
+
+  /**
+   * Suffix element to be displayed after the select input.
+   * @default null
+   */
   suffix?: React.ReactNode;
+
+  /**
+   * Additional class names for styling.
+   * @default ""
+   */
   className?: string;
 }
 
