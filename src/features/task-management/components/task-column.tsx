@@ -7,15 +7,16 @@ import clsx from "clsx";
 
 interface TaskColumnProps {
   status: StatusResponseDatum;
+  openTaskDetail?: (taskId: string) => void;
 }
 
-const TaskColumn: React.FC<TaskColumnProps> = ({ status }) => {
+const TaskColumn: React.FC<TaskColumnProps> = (props) => {
   const { moveTask } = useTaskBoard();
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "TASK",
     drop: (item: { id: string }) => {
-      moveTask(item.id, status.id);
+      moveTask(item.id, props.status.id);
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -35,14 +36,14 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ status }) => {
     >
       <h3 className="text-lg w-[250px] font-semibold text-support-100 p-2 rounded-md flex items-center gap-3 transition-all duration-300">
         <div
-          style={{ backgroundColor: status.color }}
+          style={{ backgroundColor: props.status.color }}
           className="rounded-full h-3 w-3"
         ></div>
-        {status.name}
+        <p className="text-base">{props.status.name}</p>
       </h3>
       <div className="mt-3 space-y-2">
-        {status.taskManagements.map((task) => (
-          <TaskCard key={task.id} task={task} />
+        {props.status.taskManagements.map((task) => (
+          <TaskCard key={task.id} task={task} onClick={props.openTaskDetail} />
         ))}
       </div>
     </div>

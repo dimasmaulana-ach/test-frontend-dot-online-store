@@ -27,3 +27,11 @@ export interface TaskBoardResponseUser {
   name: string;
   email: string;
 }
+
+/**
+ * TaskBoardResponse By Id
+ */
+export interface TaskBoardResponseById {
+  message: string;
+  data: TaskBoardResponseDatum;
+}

@@ -11,7 +11,7 @@ const LandingPages = React.lazy(
   () => import("@/features/landing/pages/landing")
 );
 const TaskManagementPages = React.lazy(
-  () => import("@/features/task-management/pages/task-board")
+  () => import("@/features/task-management/pages/task-management")
 );
 
 export const route_auth: RouteObject[] = [

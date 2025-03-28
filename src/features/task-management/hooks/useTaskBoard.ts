@@ -11,7 +11,7 @@ import {
  * @description This function makes a GET request to the "/task-status" endpoint
  * to retrieve the current task statuses.
  */
-const fetchTaskStatuses = async (): Promise<StatusResponseDatum[]> => {
+export const fetchTaskStatuses = async (): Promise<StatusResponseDatum[]> => {
   const { data } = await auth.get<StatusResponse>("/task-status");
   return data.data;
 };
@@ -42,6 +42,7 @@ export const useTaskBoard = () => {
     data: taskStatuses = [],
     isLoading,
     isError,
+    refetch
   } = useQuery({
     queryKey: ["task-status"],
     queryFn: fetchTaskStatuses,
@@ -138,5 +139,6 @@ export const useTaskBoard = () => {
     isLoading,
     isError,
     moveTask,
+    refetch,
   };
 };
