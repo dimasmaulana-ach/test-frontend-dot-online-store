@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@custom-variant dark  (&:where([data-theme=dark], [data-theme=dark] *));
+
+@custom-variant light (&:where([data-theme=light], [data-theme=light] *));
+
+:root {
+  --color-primary-100: #ffffff;
+  --color-primary-200: #f5f5f5;
+  --color-primary-300: #f0f0f0;
+  --color-support-100: #000000;
+  --color-support-200: #4c4c4c;
+
+  --color-radial-gradient-background: #0006;
+}
+
+[data-theme="dark"] {
+  --color-primary-100: #242424;
+  --color-primary-200: #1a1a1a;
+  --color-primary-300: #161616;
+  --color-support-100: #ffffff;
+  --color-support-200: #afafaf;
+
+  --color-radial-gradient-background: #fff4;
+}
+
+/* Define theme colors in Tailwind v4 format */
+@theme {
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-support-100: var(--color-support-100);
+  --color-support-200: var(--color-support-200);
+
+  --color-radial-gradient-background: var(--color-radial-gradient-background);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-support-100 text-primary-100 p-2 rounded-md cursor-pointer hover:bg-support-100/90 transition-all duration-300;
+  }
+
+  .btn-icon-primary {
+    @apply px-2 py-2 bg-support-100 text-primary-100 rounded-md cursor-pointer hover:bg-support-100/90 transition-all duration-300;
+  }
+
+  .btn-outline {
+    @apply p-2 border-[1px] border-support-100/30 transition-all duration-300 text-support-100 rounded-md flex items-center;
+  }
+
+  .btn-icon-outline {
+    @apply px-2 py-2 border-[1px] border-support-100/30 transition-all duration-300 text-support-100 rounded-md flex items-center;
+  }
+}
+
+body {
+  @apply bg-primary-100 text-support-100;
+}
+
+.landing-base {
+  background-image: radial-gradient(
+    var(--color-radial-gradient-background),
+    1px,
+    transparent 1px
+  );
+  background-size: 90px 90px;
+  min-height: 100vh;
+}
