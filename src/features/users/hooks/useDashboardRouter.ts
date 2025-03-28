@@ -10,6 +10,9 @@ export interface RouteTypes {
   name: string;
 }
 
+/**
+ * for replace uuid
+ */
 const UUID_REGEX =
   /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/g;
 
@@ -18,12 +21,12 @@ export const useDashboardRouter = () => {
   const currentPath = location.pathname.replace(UUID_REGEX, ":id");
   const route: RouteTypes[] = [
     {
-      path: "/dashboard",
+      path: "/users",
       icon: mdiViewDashboardOutline,
-      name: "Dashboard",
+      name: "Users",
     },
     {
-      path: "/dashboard/task-management",
+      path: "/task-management",
       icon: mdiFileTreeOutline,
       name: "Task Management",
     },
