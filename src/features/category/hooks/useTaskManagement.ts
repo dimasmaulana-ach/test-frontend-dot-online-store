@@ -14,14 +14,6 @@ export const useTaskManagement = () => {
     taskId: "",
   });
 
-  const [openEditTask, setOpenEditTask] = React.useState<{
-    open: boolean;
-    taskId: string;
-  }>({
-    open: false,
-    taskId: "",
-  });
-
   const [renderDrawerComponents, setRenderDrawerComponents] = useState<{
     components: "TaskDetails" | "TaskAddTask" | "TaskEdit";
   }>({
@@ -46,8 +38,6 @@ export const useTaskManagement = () => {
   return {
     taskAdd,
     setTaskAdd,
-    openEditTask,
-    setOpenEditTask,
     openDetailTask,
     setOpenDetailTask,
     renderDrawerComponents,

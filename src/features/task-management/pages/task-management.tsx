@@ -2,24 +2,23 @@ import React from "react";
 import { useTaskBoard } from "../hooks/useTaskBoard";
 import Loaders from "@/components/loading/loaders";
 import Drawer from "@/components/drawer/drawer";
-import FormAddStatus from "../components/form-add-status";
-import clsx from "clsx";
 import TaskBoard from "../components/task-board";
 import { useTaskManagement } from "../hooks/useTaskManagement";
 import TaskDetails from "../components/task-details";
 import { mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import FormAddTask from "../components/form-add-task";
+import FormEditTask from "../components/form-edit-task";
 
 const TaskManagemt: React.FC = () => {
-  const { taskStatuses, isLoading, isError, refetch } = useTaskBoard();
+  const { taskStatuses, isLoading, isError, refetch, handleDeleteTask } =
+    useTaskBoard();
   const {
     taskAdd,
     setTaskAdd,
-    position,
-    setPosition,
-    taskManagementTabs,
     openDetailTask,
+    openEditTask,
+    setOpenEditTask,
     setOpenDetailTask,
     renderDrawerComponents,
     setRenderDrawerComponents,
@@ -34,89 +33,64 @@ const TaskManagemt: React.FC = () => {
   if (isError) return <p>Error fetching tasks.</p>;
 
   return (
-    <div className="p-5 flex flex-col gap-1">
+    <div className="p-5 flex flex-col gap-1 overflow-x-hidden">
       <div className="flex flex-row justify-between items-center">
-        <div className="flex flex-row gap-2">
-          {taskManagementTabs.map((item, i) => (
-            <button
-              className={clsx(
-                "flex flex-row gap-1 items-center rounded-full px-5",
-                position === item.value ? "btn-primary" : "btn-outline"
-              )}
-              key={i}
-              onClick={() => setPosition(item.value)}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
         <button
           className="btn-primary flex items-center gap-1"
           onClick={() => {
-            if (position === "board") {
-              setTaskAdd({ ...taskAdd, task: true });
-              setRenderDrawerComponents({ components: "TaskAddTask" });
-            }
-            if (position === "status") {
-              setTaskAdd({ ...taskAdd, status: true });
-              setRenderDrawerComponents({ components: "TaskAddStatus" });
-            }
+            setTaskAdd({ ...taskAdd, task: true });
+            setRenderDrawerComponents({ components: "TaskAddTask" });
           }}
         >
           <Icon path={mdiPlus} size={1} />
-          <p className="md:block hidden">
-            Add{" "}
-            {position === "board" ? "Task" : "Status"}
-          </p>
+          <p className="md:block hidden">Add Task</p>
         </button>
       </div>
 
-      <div className="overflow-x-auto overflow-y-auto min-w-[90vw] min-h-[90vh]">
-        <div>
-          {position === "board" ? (
-            <div>
-              <TaskBoard
-                taskStatuses={taskStatuses}
-                openTaskDetail={(taskId) => {
-                  setOpenDetailTask({ open: true, taskId });
-                  setRenderDrawerComponents({ components: "TaskDetails" });
-                }}
-              />
-            </div>
-          ) : position === "status" ? (
-            <div className="flex flex-row gap-2"></div>
-          ) : (
-            <div className="flex flex-row gap-2"></div>
-          )}
+      <div className="overflow-x-auto overflow-y-auto">
+        <div className="min-w-[90vw] min-h-[90vh]">
+          <TaskBoard
+            taskStatuses={taskStatuses}
+            openTaskDetail={(taskId) => {
+              setOpenDetailTask({ open: true, taskId });
+              setRenderDrawerComponents({ components: "TaskDetails" });
+            }}
+          />
         </div>
       </div>
 
       <Drawer
-        isOpen={taskAdd.status || taskAdd.task || openDetailTask.open}
+        isOpen={taskAdd.task || openDetailTask.open}
         onClose={() => {
-          setTaskAdd({ ...taskAdd, status: false, task: false });
+          setTaskAdd({
+            ...taskAdd,
+            task: false,
+          });
           setOpenDetailTask({ ...openDetailTask, open: false });
         }}
         placement="right"
         title={
-          taskAdd.status
-            ? "Add Status"
-            : taskAdd.task
-            ? "Add Task"
-            : openDetailTask.open
+          renderDrawerComponents.components === "TaskDetails"
             ? "Task Details"
-            : ""
+            : renderDrawerComponents.components === "TaskAddTask"
+            ? "Add Task"
+            : "Edit Task"
         }
       >
         {
           {
-            TaskDetails: <TaskDetails taskId={openDetailTask.taskId} />,
-            TaskAddStatus: (
-              <FormAddStatus
-                lengthOfStatus={taskStatuses.length + 1}
-                handleSubmitted={() => {
-                  refetch();
-                  setTaskAdd({ ...taskAdd, status: false });
+            TaskDetails: (
+              <TaskDetails
+                taskId={openDetailTask.taskId}
+                openEditTask={function (taskId: string): void {
+                  setOpenEditTask({ ...openEditTask, open: true, taskId });
+                  setRenderDrawerComponents({ components: "TaskEdit" });
+                }}
+                openDeleteTask={(id) => {
+                  setOpenDetailTask({ ...openDetailTask, open: false });
+                  handleDeleteTask(id).then(() => {
+                    refetch();
+                  });
                 }}
               />
             ),
@@ -130,20 +104,17 @@ const TaskManagemt: React.FC = () => {
                 />
               </div>
             ),
-            TaskEdit: <div>Edit Task Component</div>,
+            TaskEdit: (
+              <FormEditTask
+                id={openDetailTask.taskId}
+                handleSubmitted={() => {
+                  refetch();
+                  setOpenDetailTask({ ...openDetailTask, open: false });
+                }}
+              />
+            ),
           }[renderDrawerComponents.components]
         }
-        {/* {taskAdd.task ? (
-          <></>
-        ) : (
-          <FormAddStatus
-            lengthOfStatus={taskStatuses.length + 1}
-            handleSubmitted={() => {
-              refetch();
-              setTaskAdd({ ...taskAdd, status: false });
-            }}
-          />
-        )} */}
       </Drawer>
     </div>
   );

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 export const useTaskManagement = () => {
   const [taskAdd, setTaskAdd] = React.useState<{
-    task: boolean;
+    status: boolean;
   }>({
-    task: false,
+    status: false,
   });
   const [openDetailTask, setOpenDetailTask] = React.useState<{
     open: boolean;
@@ -14,18 +14,10 @@ export const useTaskManagement = () => {
     taskId: "",
   });
 
-  const [openEditTask, setOpenEditTask] = React.useState<{
-    open: boolean;
-    taskId: string;
-  }>({
-    open: false,
-    taskId: "",
-  });
-
   const [renderDrawerComponents, setRenderDrawerComponents] = useState<{
-    components: "TaskDetails" | "TaskAddTask" | "TaskEdit";
+    components: "StatusDetails" | "StatusAddStatus" | "StatusEdit";
   }>({
-    components: "TaskDetails",
+    components: "StatusDetails",
   });
 
   // const taskManagementTabs = [
@@ -46,8 +38,6 @@ export const useTaskManagement = () => {
   return {
     taskAdd,
     setTaskAdd,
-    openEditTask,
-    setOpenEditTask,
     openDetailTask,
     setOpenDetailTask,
     renderDrawerComponents,

@@ -38,5 +38,5 @@ export const useTaskDetails = (id: string) => {
       ]
     : [];
 
-  return { data: mappingData, isLoading, isError };
+  return { data: mappingData, isLoading, isError, response: data };
 };

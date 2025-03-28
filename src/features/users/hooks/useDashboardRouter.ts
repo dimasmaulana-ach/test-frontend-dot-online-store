@@ -1,7 +1,4 @@
-import {
-  mdiFileTreeOutline,
-  mdiViewDashboardOutline,
-} from "@mdi/js";
+import { mdiFileTreeOutline } from "@mdi/js";
 import { useLocation } from "react-router-dom";
 
 export interface RouteTypes {
@@ -20,11 +17,6 @@ export const useDashboardRouter = () => {
   const location = useLocation();
   const currentPath = location.pathname.replace(UUID_REGEX, ":id");
   const route: RouteTypes[] = [
-    {
-      path: "/users",
-      icon: mdiViewDashboardOutline,
-      name: "Users",
-    },
     {
       path: "/task-management",
       icon: mdiFileTreeOutline,

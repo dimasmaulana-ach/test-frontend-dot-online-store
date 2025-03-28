@@ -11,7 +11,7 @@ const Routes: React.FC = () => {
 
   return useRoutes([
     ...routes,
-    { path: "*", element: <Navigate to={token ? "/users" : "/login"} replace /> },
+    { path: "*", element: <Navigate to={token ? "/task-management" : "/login"} replace /> },
   ]);
 };
 

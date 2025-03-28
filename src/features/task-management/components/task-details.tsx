@@ -6,6 +6,8 @@ import Loaders from "@/components/loading/loaders";
 
 export interface TaskDetailsProps {
   taskId: string;
+  openEditTask: (taskId: string) => void;
+  openDeleteTask: (taskId: string) => void;
 }
 
 const TaskDetails: React.FC<TaskDetailsProps> = (props) => {
@@ -28,11 +30,17 @@ const TaskDetails: React.FC<TaskDetailsProps> = (props) => {
         ))}
       </div>
       <div className="flex flex-row gap-2 mt-5">
-        <button className="btn-primary flex flex-row gap-1 items-center">
+        <button
+          className="btn-primary flex flex-row gap-1 items-center"
+          onClick={() => props.openEditTask(props.taskId)}
+        >
           <Icon path={mdiPencil} size={1} />
           Edit
         </button>
-        <button className="btn-primary flex flex-row gap-1 items-center">
+        <button
+          className="btn-primary flex flex-row gap-1 items-center"
+          onClick={() => props.openDeleteTask(props.taskId)}
+        >
           <Icon path={mdiDelete} size={1} />
           Delete
         </button>

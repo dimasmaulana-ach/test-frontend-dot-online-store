@@ -36,13 +36,18 @@ const updateTaskStatus = async ({
   return data;
 };
 
+const deleteTask = async (id: string) => {
+  const { data } = await auth.delete(`/task-management/${id}`);
+  return data;
+};
+
 export const useTaskBoard = () => {
   const queryClient = useQueryClient();
   const {
     data: taskStatuses = [],
     isLoading,
     isError,
-    refetch
+    refetch,
   } = useQuery({
     queryKey: ["task-status"],
     queryFn: fetchTaskStatuses,
@@ -134,11 +139,17 @@ export const useTaskBoard = () => {
     mutation.mutate({ id, status });
   };
 
+  const handleDeleteTask = async (id: string) => {
+    await deleteTask(id);
+    refetch();
+  }
+
   return {
     taskStatuses,
     isLoading,
     isError,
     moveTask,
     refetch,
+    handleDeleteTask,
   };
 };

@@ -1,15 +1,8 @@
 import Loaders from "@/components/loading/loaders";
 import DashboardLayouts from "@/layouts/dashboard";
-import LandingLayouts from "@/layouts/landing";
 import React from "react";
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
-const UsersPages = React.lazy(
-  () => import("@/features/users/pages/users")
-);
-const LandingPages = React.lazy(
-  () => import("@/features/landing/pages/landing")
-);
 const TaskManagementPages = React.lazy(
   () => import("@/features/task-management/pages/task-management")
 );
@@ -17,30 +10,12 @@ const TaskManagementPages = React.lazy(
 export const route_auth: RouteObject[] = [
   {
     path: "/",
-    element: <LandingLayouts />,
-    children: [
-      {
-        path: "",
-        element: (
-          <React.Suspense fallback={<Loaders isFullScreen />}>
-            <LandingPages />
-          </React.Suspense>
-        ),
-      },
-    ],
+    element: <Navigate to={"/task-management"} replace />,
   },
   {
     path: "",
     element: <DashboardLayouts />,
     children: [
-      {
-        path: "/users",
-        element: (
-          <React.Suspense fallback={<Loaders isFullScreen />}>
-            <UsersPages />
-          </React.Suspense>
-        ),
-      },
       {
         path: "/task-management",
         element: (
@@ -48,8 +23,7 @@ export const route_auth: RouteObject[] = [
             <TaskManagementPages />
           </React.Suspense>
         ),
-      }
-
+      },
     ],
   },
 ];
