@@ -13,7 +13,7 @@ const LoginPages = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   return (
     <div className="h-screen w-screen flex items-center justify-center">
-      <div className="border-[1px] rounded-xl border-support-200/30 bg-primary-100 text-support-100 p-5 w-[30vw]">
+      <div className="md:w-[30vw] sm:w-[50vw] w-[90vw] border-[1px] rounded-xl border-support-200/30 bg-primary-100 text-support-100 p-5 ">
         <Formik
           initialValues={initialValues}
           onSubmit={(values: FormikValues) => {

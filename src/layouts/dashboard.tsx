@@ -7,10 +7,12 @@ import clsx from "clsx";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Drawer from "@/components/drawer/drawer";
+import { useLogout } from "@/features/auth/hooks/useLogout";
 
 const DashboardLayouts: React.FC = () => {
   const { route, generateBreadcrumbs } = useDashboardRouter();
   const { sidebar, toggleSidebar } = useSidebarHandler();
+  const { logout } = useLogout();
   const { pathname } = window.location;
 
   return (
@@ -89,7 +91,7 @@ const DashboardLayouts: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <ThemeToggleButton />
-              <button className="btn-icon-outline">
+              <button className="btn-icon-outline" onClick={logout}>
                 <Icon path={mdiLogout} size={1} />
               </button>
             </div>
@@ -125,7 +127,7 @@ const DashboardLayouts: React.FC = () => {
                       : "justify-start gap-2"
                   )}
                   to={item.path}
-                  onClick={()=> {
+                  onClick={() => {
                     toggleSidebar();
                   }}
                 >
