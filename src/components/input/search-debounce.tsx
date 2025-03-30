@@ -9,13 +9,6 @@ interface InputSearchDebounceProps {
   className?: string;
 }
 const InputSearchDebounce: React.FC<InputSearchDebounceProps> = (props) => {
-  // const debouncedSearch = useCallback(
-  //   debounce((val: string) => {
-  //     props.onChange(val);
-  //   }, 500),
-  //   [props.onChange]
-  // );
-
   const [search, setSearch] = useState(props.defaultValue);
 
   useEffect(() => {

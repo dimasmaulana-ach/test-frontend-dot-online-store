@@ -28,17 +28,16 @@ export const useProductList = () => {
     limit: 9,
     sort: "",
   });
-  const [_, setDataPagination] =
-    useState<ProductListResponseDataPagination>({
-      totalItems: 0,
-      totalPages: 0,
-      currentPage: 0,
-      hasNextPage: false,
-      hasPrevPage: false,
-      nextPage: 0,
-      prevPage: null,
-      limit: 0,
-    });
+  const [_, setDataPagination] = useState<ProductListResponseDataPagination>({
+    totalItems: 0,
+    totalPages: 0,
+    currentPage: 0,
+    hasNextPage: false,
+    hasPrevPage: false,
+    nextPage: 0,
+    prevPage: null,
+    limit: 0,
+  });
   const [products, setProducts] = useState<ProductListResponseDataItem[]>([]);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -84,8 +83,6 @@ export const useProductList = () => {
   }, [productList]);
 
   const loadMore = useCallback(async () => {
-    // alert(dataPagination.totalPages)
-    // if (dataPagination && pagination.page < dataPagination.totalPages) {
     if (isFetching) return;
     setIsFetching(true);
 
@@ -110,7 +107,6 @@ export const useProductList = () => {
     } finally {
       setIsFetching(false);
     }
-    // }
   }, [pagination, isFetching, search]);
 
   useEffect(() => {

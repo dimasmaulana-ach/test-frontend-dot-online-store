@@ -68,13 +68,10 @@ const TextInput: React.FC<TextInputProps> = ({
   className,
   ref,
 }) => {
-  // State untuk menangani defaultValue (hanya diambil saat pertama kali render)
   const [inputValue, setInputValue] = useState("");
 
-  // Jika `name` ada, gunakan Formik
   const [formikField, meta, helpers] = useField(name || "_");
 
-  // Tentukan field yang digunakan
   const field = name
     ? {
         ...formikField,
