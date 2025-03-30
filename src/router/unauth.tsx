@@ -2,14 +2,14 @@ import Loaders from "@/components/loading/loaders";
 import LandingLayouts from "@/layouts/landing";
 import NoLayouts from "@/layouts/no-layouts";
 import React from "react";
-import { Navigate } from "react-router-dom";
 import { RouteObject } from "react-router-dom";
 
 const LoginPages = React.lazy(() => import("@/features/auth/pages/login"));
 const RegisterPages = React.lazy(
   () => import("@/features/auth/pages/register")
 );
-const ProductPages = React.lazy(() => import("@/features/product/pages/index"));
+const ProductListPages = React.lazy(() => import("@/features/product/pages/index"));
+const ProductDetailsPages = React.lazy(() => import("@/features/product/pages/details"));
 
 export const route_unauth: RouteObject[] = [
   {
@@ -20,7 +20,15 @@ export const route_unauth: RouteObject[] = [
         path: "/",
         element: (
           <React.Suspense fallback={<Loaders isFullScreen />}>
-            <ProductPages />
+            <ProductListPages />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "/product/:id",
+        element: (
+          <React.Suspense fallback={<Loaders isFullScreen />}>
+            <ProductDetailsPages />
           </React.Suspense>
         ),
       },

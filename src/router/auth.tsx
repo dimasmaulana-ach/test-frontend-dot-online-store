@@ -1,26 +1,19 @@
 import Loaders from "@/components/loading/loaders";
-import DashboardLayouts from "@/layouts/dashboard";
+import LandingLayouts from "@/layouts/landing";
 import React from "react";
-import { Navigate, RouteObject } from "react-router-dom";
-
-const TaskManagementPages = React.lazy(
-  () => import("@/features/task-management/pages/task-management")
-);
+import { RouteObject } from "react-router-dom";
+const CartListPages = React.lazy(() => import("@/features/cart/pages/index"));
 
 export const route_auth: RouteObject[] = [
   {
     path: "/",
-    element: <Navigate to={"/task-management"} replace />,
-  },
-  {
-    path: "",
-    element: <DashboardLayouts />,
+    element: <LandingLayouts />,
     children: [
       {
-        path: "/task-management",
+        path: "/cart",
         element: (
           <React.Suspense fallback={<Loaders isFullScreen />}>
-            <TaskManagementPages />
+            <CartListPages />
           </React.Suspense>
         ),
       },

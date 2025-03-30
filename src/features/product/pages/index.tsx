@@ -1,18 +1,19 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useProductList } from "../hooks/useProductList";
 import { formatMoney } from "@/utils/format-money";
 import InputSearchDebounce from "@/components/input/search-debounce";
 import { useSearchProductList } from "../hooks/useSearchProductList";
+import { useNavigate } from "react-router-dom";
 
-const ListProductPages: React.FC = () => {
-  const { products, isLoading } = useProductList();
+const ProductListPages: React.FC = () => {
+  const { products } = useProductList();
   const { search, setSearch } = useSearchProductList();
-  const loader = useRef(null);
+  const navigate = useNavigate();
   return (
-    <div className="p-4 max-w-4xl mx-auto flex flex-col gap-4">
-      <div>
+    <div className="p-4 md:w-3/4 mx-auto flex flex-col gap-4">
+      <div className="flex sm:flex-row flex-col justify-between items-center">
         <h1 className="text-2xl font-bold">Product List</h1>
-        <div className="w-full block md:hidden">
+        <div className="w-full md:w-1/3 sm:w-1/2">
           <InputSearchDebounce
             defaultValue={search}
             onChange={(val) => setSearch(val)}
@@ -21,10 +22,16 @@ const ListProductPages: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {products?.length === 0 && (
+          <div className="col-span-3 text-center">
+            <p className="text-gray-500">No products found</p>
+          </div>
+        )}
         {products?.map((product) => (
           <div
             key={product.id}
             className="border border-support-100/30 rounded-md shadow"
+            onClick={() => navigate(`/product/${product.id}`)}
           >
             <img
               src={product.image_url}
@@ -44,11 +51,8 @@ const ListProductPages: React.FC = () => {
           </div>
         ))}
       </div>
-      <div ref={loader} className="h-10 mt-4 text-center">
-        {isLoading && <p>Loading more products...</p>}
-      </div>
     </div>
   );
 };
 
-export default ListProductPages;
+export default ProductListPages;

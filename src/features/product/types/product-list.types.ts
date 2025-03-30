@@ -29,3 +29,13 @@ export interface ProductListResponseDataPagination {
   prevPage: null;
   limit: number;
 }
+
+/**
+ * Product Details Response
+ * @description Response for product details
+ */
+
+export interface ProductDetailsResponse {
+  message: string;
+  data: ProductListResponseDataItem;
+}

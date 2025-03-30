@@ -28,7 +28,7 @@ export const useProductList = () => {
     limit: 9,
     sort: "",
   });
-  const [dataPagination, setDataPagination] =
+  const [_, setDataPagination] =
     useState<ProductListResponseDataPagination>({
       totalItems: 0,
       totalPages: 0,
