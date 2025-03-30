@@ -13,5 +13,16 @@ auth.interceptors.request.use((config) => {
   config.headers["Content-Type"] = "application/json";
   return config;
 });
+auth.interceptors.response.use(
+  (response) => response, // Jika sukses, lanjutkan responsenya
+  (error) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().clearUsers();
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default auth;

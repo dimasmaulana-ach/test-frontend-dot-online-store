@@ -1,11 +1,11 @@
 import React from "react";
-import { useCartListoductList } from "../hooks/useCartList";
+import { useCartListList } from "../hooks/useCartList";
 import { formatMoney } from "@/utils/format-money";
 import Icon from "@mdi/react";
 import { mdiDeleteOutline, mdiMinus, mdiPlus } from "@mdi/js";
 
 const CartListPages: React.FC = () => {
-  const { data, updatedebounce } = useCartListoductList();
+  const { data, updatedebounce, deleteItemCartMutation } = useCartListList();
 
   return (
     <div className="p-4 md:w-3/4 mx-auto flex flex-col gap-4">
@@ -76,7 +76,7 @@ const CartListPages: React.FC = () => {
             <div className="flex flex-col  p-4">
               <button
                 className="btn-primary bg-red-500 text-support-100 flex flex-row items-center gap-2 cursor-pointer justify-center"
-                onClick={() => updatedebounce(data.id, 0)}
+                onClick={() => deleteItemCartMutation.mutateAsync(data.id)}
               >
                 <Icon path={mdiDeleteOutline} size={1} />
                 <span className="hidden md:block">Remove</span>

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   CartListResponse,
   CartListResponseData,
@@ -22,7 +22,13 @@ export const updateItemCart = async (
   return data.data;
 };
 
-export const useCartListoductList = () => {
+const deleteItemCart = async (id: string) => {
+  const { data } = await auth.delete<CartListResponse>(`/cart-items/${id}`);
+  return data.data;
+};
+
+export const useCartListList = () => {
+  const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["cartList"],
     queryFn: fetchCartList,
@@ -44,11 +50,23 @@ export const useCartListoductList = () => {
     updateItemCartMutation.mutate({ id, quantity });
   }, 500);
 
+  const deleteItemCartMutation = useMutation({
+    mutationFn: (id: string) => deleteItemCart(id),
+    onSuccess: () => {
+      refetch();
+      queryClient.invalidateQueries({ queryKey: ["cartCount"] });
+    },
+    onError: () => {
+      console.log("error");
+    },
+  });
+
   return {
     data,
     isLoading,
     refetch,
     updateItemCartMutation,
     updatedebounce,
+    deleteItemCartMutation,
   };
 };
