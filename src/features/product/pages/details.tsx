@@ -15,7 +15,7 @@ const ProductDetailsPages: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div className="transition-all duration-300">
-      <div className="p-4 w-3/4 mx-auto flex flex-col gap-4">
+      <div className="p-4 md:w-3/4 w-full mx-auto flex flex-col gap-4">
         <div className="flex flex-row items-center gap-2">
           <Link to={"/"}>
             <Icon path={mdiChevronLeft} size={1.3} />
