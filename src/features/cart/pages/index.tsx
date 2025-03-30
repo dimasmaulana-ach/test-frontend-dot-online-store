@@ -26,7 +26,7 @@ const CartListPages: React.FC = () => {
                 loading="lazy"
               />
               <div className="px-3">
-                <h2 className="mt-2 text-xl font-semibold">
+                <h2 className="mt-2 md:text-xl text-base font-semibold">
                   {data.product.name}
                 </h2>
 
