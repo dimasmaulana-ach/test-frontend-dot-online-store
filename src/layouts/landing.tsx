@@ -11,7 +11,7 @@ import { Link, Outlet } from "react-router-dom";
 
 const LandingLayouts: React.FC = () => {
   const { users, clearUsers } = useAuthStore();
-  const { data } = useCartCount();
+  const { data } = users.token ? useCartCount() : { data: { count: 0 } };
 
   return (
     <div className="text-support-100">
